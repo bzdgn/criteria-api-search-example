@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "44ae4013-45c0-44ca-aa5d-f17589a1d2bc",
+		"name": "CriteriaSearchAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1510878"
+	},
+	"item": [
+		{
+			"name": "ComplexFilter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"field\": \"category\",\r\n        \"operator\": \"contains\",\r\n        \"value\": \"software\"\r\n    },\r\n    {\r\n        \"field\": \"name\",\r\n        \"operator\": \"contains\",\r\n        \"value\": \"ACME\"\r\n    },\r\n    {\r\n        \"field\": \"price\",\r\n        \"operator\": \">=\",\r\n        \"value\": 56\r\n    },\r\n    {\r\n        \"field\": \"price\",\r\n        \"operator\": \"<\",\r\n        \"value\": 1500\r\n    }\r\n]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/filter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"filter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CategoryFilter_electronics",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"field\": \"category\",\r\n        \"operator\": \"is\",\r\n        \"value\": \"electronics\"\r\n    }\r\n]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/filter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"filter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CategoryFilter_software",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"field\": \"category\",\r\n        \"operator\": \"=\",\r\n        \"value\": \"software\"\r\n    }\r\n]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/products/filter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"filter"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
