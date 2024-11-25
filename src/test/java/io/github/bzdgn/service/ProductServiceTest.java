@@ -3,13 +3,11 @@ package io.github.bzdgn.service;
 import io.github.bzdgn.dto.FilterRequest;
 import io.github.bzdgn.entity.Product;
 import io.github.bzdgn.exception.InvalidFilterException;
+import io.github.bzdgn.exception.InvalidSearchParameterFieldException;
 import io.github.bzdgn.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,6 +175,21 @@ class ProductServiceTest {
         );
 
         assertEquals("Invalid operator: invalid_operator", exception.getMessage());
+    }
+
+    @Test
+    void testInvalidField() {
+        // Arrange
+        List<FilterRequest> filters = new ArrayList<>();
+        filters.add(new FilterRequest("invalid_field", "=", 100));
+
+        // Act & Assert
+        InvalidSearchParameterFieldException exception = assertThrows(
+                InvalidSearchParameterFieldException.class,
+                () -> productService.filterProducts(filters)
+        );
+
+        assertEquals("Could not resolve attribute 'invalid_field' of 'io.github.bzdgn.entity.Product'", exception.getMessage());
     }
 
 }

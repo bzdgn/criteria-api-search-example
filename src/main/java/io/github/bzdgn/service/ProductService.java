@@ -2,10 +2,12 @@ package io.github.bzdgn.service;
 
 import io.github.bzdgn.dto.FilterRequest;
 import io.github.bzdgn.entity.Product;
-import io.github.bzdgn.exception.InvalidFilterException;
+import io.github.bzdgn.exception.InvalidSearchParameterFieldException;
 import io.github.bzdgn.repository.ProductRepository;
 import io.github.bzdgn.specification.Operator;
 import io.github.bzdgn.specification.ProductSpecification;
+import org.hibernate.query.sqm.PathElementException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,16 @@ public class ProductService {
             spec = spec.and(chainSpecs(filter.getField(), filter.getOperator(), filter.getValue()));
         }
 
-        return productRepository.findAll(spec);
+        List<Product> results = null;
+        try {
+            results = productRepository.findAll(spec);
+        } catch(InvalidDataAccessApiUsageException ex) {
+            if (ex.getCause().getClass().equals(PathElementException.class)) {
+                throw new InvalidSearchParameterFieldException(ex.getCause().getMessage());
+            }
+        }
+
+        return results;
     }
 
     static Specification<Product> chainSpecs(String field, String operator, Object value) {

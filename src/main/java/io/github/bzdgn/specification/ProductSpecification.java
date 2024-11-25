@@ -1,6 +1,7 @@
 package io.github.bzdgn.specification;
 
 import io.github.bzdgn.entity.Product;
+import org.hibernate.query.sqm.PathElementException;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ProductSpecification {
@@ -39,5 +40,6 @@ public class ProductSpecification {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(field), value);
     }
+
 }
 
